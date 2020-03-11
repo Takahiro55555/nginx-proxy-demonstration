@@ -1,0 +1,28 @@
+version: "3"
+services:
+  nginx-app-01:
+    image: nginx
+    container_name: nginx-app-01
+    environment:
+      VIRTUAL_HOST: app1.example.com
+      LETSENCRYPT_HOST: app1.example.com
+      LETSENCRYPT_EMAIL: example@mail.com
+    volumes:
+      - ./public-html-01/:/app
+      - ../nginx/default.conf:/etc/nginx/conf.d/default.conf
+
+  nginx-app-02:
+    image: nginx
+    container_name: nginx-app-02
+    environment:
+      VIRTUAL_HOST: app2.example.com
+      LETSENCRYPT_HOST: app2.example.com
+      LETSENCRYPT_EMAIL: example@mail.com
+    volumes:
+      - ./public-html-02/:/app
+      - ../nginx/default.conf:/etc/nginx/conf.d/default.conf
+
+networks:
+  default:
+    external:
+      name: shared
